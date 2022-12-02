@@ -41,7 +41,7 @@ const dictionaryRPS = {
                     'Z': 3,
 }
 
-let data = fs.readFileSync(fileName, {encoding:'utf8'}).split('\n')
+const data = fs.readFileSync(fileName, {encoding:'utf8'}).split('\n')
 
 gamesScore = []
 
@@ -50,7 +50,7 @@ data.forEach((element) => {
     const newElement = (dictionaryNewCombination?.[element])
     const valueCombination = (dictionaryCombination?.[newElement]); //change newElement>element for part 1
     const valueSingle = (dictionaryRPS?.[newElement.substr(2,1)])  //change newElement>element for part 1
-    gameScore = valueCombination + valueSingle
+    const gameScore = valueCombination + valueSingle
     gamesScore.push(gameScore)
 })
 

@@ -43,7 +43,7 @@ const dictionaryRPS = {
 
 const data = fs.readFileSync(fileName, {encoding:'utf8'}).split('\n')
 
-gamesScore = []
+const gamesScore = []
 
 data.forEach((element) => {
     element = element.replace(/[\r\n]/g, '');

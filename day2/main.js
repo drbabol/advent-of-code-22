@@ -12,33 +12,33 @@ const fs = require('fs');
 const fileName = 'input.txt'
 
 const dictionaryCombination = {
-                    'A X': 3, //X>Z
-                    'A Y': 6, //Y>X
-                    'A Z': 0, //Z>Y
-                    'B X': 0, //ok
-                    'B Y': 3, //ok
-                    'B Z': 6, //ok
-                    'C X': 6, //X>Y
-                    'C Y': 0, //Y>Z
-                    'C Z': 3, //Z>X
+  'A X': 3, //X>Z
+  'A Y': 6, //Y>X
+  'A Z': 0, //Z>Y
+  'B X': 0, //ok
+  'B Y': 3, //ok
+  'B Z': 6, //ok
+  'C X': 6, //X>Y
+  'C Y': 0, //Y>Z
+  'C Z': 3, //Z>X
 } 
 
 const dictionaryNewCombination = {
-                    'A X': 'A Z', //X>Z
-                    'A Y': 'A X', //Y>X
-                    'A Z': 'A Y', //Z>Y
-                    'B X': 'B X', //ok
-                    'B Y': 'B Y', //ok
-                    'B Z': 'B Z', //ok
-                    'C X': 'C Y', //X>Y
-                    'C Y': 'C Z', //Y>Z
-                    'C Z': 'C X', //Z>X
+  'A X': 'A Z', //X>Z
+  'A Y': 'A X', //Y>X
+  'A Z': 'A Y', //Z>Y
+  'B X': 'B X', //ok
+  'B Y': 'B Y', //ok
+  'B Z': 'B Z', //ok
+  'C X': 'C Y', //X>Y
+  'C Y': 'C Z', //Y>Z
+  'C Z': 'C X', //Z>X
 }
 
 const dictionaryRPS = {
-                    'X': 1,
-                    'Y': 2,
-                    'Z': 3,
+  'X': 1,
+  'Y': 2,
+  'Z': 3,
 }
 
 const data = fs.readFileSync(fileName, {encoding:'utf8'}).split('\n')

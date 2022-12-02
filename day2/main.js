@@ -47,7 +47,7 @@ const gamesScore = []
 
 data.forEach((element) => {
     element = element.replace(/[\r\n]/g, '');
-    const newElement = (dictionaryNewCombination?.[element])
+    const newElement = (dictionaryNewCombination?.[element]) //*
     const valueCombination = (dictionaryCombination?.[newElement]); //change newElement>element for part 1
     const valueSingle = (dictionaryRPS?.[newElement.substr(2,1)])  //change newElement>element for part 1
     const gameScore = valueCombination + valueSingle
@@ -59,3 +59,7 @@ const sumGamesScore = gamesScore.reduce((accumulator, value) => {
   }, 0);
 
 console.log(sumGamesScore)
+
+//*
+// The optional chaining (?.) operator accesses an object's property or calls a function. 
+// If the object is undefined or null, it returns undefined instead of throwing an error.

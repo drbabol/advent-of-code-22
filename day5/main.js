@@ -3,9 +3,7 @@
 const fs = require('fs');
 const fileName = 'input.txt'
 
-
 const data = fs.readFileSync(fileName, {encoding:'utf8'}).split('\n')
-
 
 const dictionaryOfStack = {
     1: ['W','M','L','F'],                 
@@ -75,7 +73,6 @@ const procedure = data => {
         finalString += arrayDictionary[arrayDictionary.length-1] 
     }
     return finalString
-
 }
 
 console.log(procedure(data))

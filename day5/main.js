@@ -5,6 +5,7 @@ const fileName = 'input.txt'
 
 const data = fs.readFileSync(fileName, {encoding:'utf8'}).split('\n')
 
+/* //test:
 const dictionaryOfStack = {
     1: ['W','M','L','F'],                 
     2: ['B','Z','V','M','F'],               
@@ -16,7 +17,7 @@ const dictionaryOfStack = {
     8: ['V','H','P','S','Z','W','R','B'],  
     9: ['B','M','J','C','G','H','Z','W']    
 }
-/* //test:
+
 const data = ['move 1 from 2 to 1',
                 'move 3 from 1 to 3',
                 'move 2 from 2 to 1',
@@ -29,6 +30,39 @@ const dictionaryOfStack = {
     3: ['P']
 }
 */
+
+indexOfEmptyRow = data.indexOf('\r')
+
+const stackData = data.slice(0,indexOfEmptyRow).reverse()
+const istructionData = data.slice(indexOfEmptyRow + 1)
+
+const newStackData = []
+ 
+stackData.forEach(element => {
+    element = element.replace(/[\r\n]/g, '')
+    newStackData.push(element.split(''))
+})
+
+arrayOfKeys = newStackData.slice(0,1).flat()
+arrayOfValues = newStackData.slice(1)
+
+//bild the dictionary
+const dictionaryOfStack = {}
+
+arrayOfKeys.forEach(key => {    
+    if ((/\d/g).test(key)){
+        indexOfKey = arrayOfKeys.indexOf(key)
+        dictionaryOfStack[key] = []
+        for (i=0; i < arrayOfValues.length; i++){      
+            dictionaryOfStack[key].push((arrayOfValues[i][indexOfKey]))
+        }
+    }
+})
+
+//cancel empty element on valuesArray dictionary
+for(j=1;j<=Object.keys(dictionaryOfStack).length;j++){
+    dictionaryOfStack[j]= dictionaryOfStack[j].filter(elm => (/\w+/g).test(elm))  
+}
 
 const procedure = data => {
 
@@ -75,4 +109,4 @@ const procedure = data => {
     return finalString
 }
 
-console.log(procedure(data))
+console.log(procedure(istructionData))

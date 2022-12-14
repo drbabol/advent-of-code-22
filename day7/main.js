@@ -1,7 +1,7 @@
 //day 7
 
 const fs = require('fs');
-const fileName = 'input.txt'
+const fileName = 'test.txt'
 
 let data = fs.readFileSync(fileName, {encoding:'utf8'})
 
@@ -32,7 +32,7 @@ const objCreation = data => {
     for (let i=0; i<dataLength; i++){
         if (data[i] === '$ ls'){
             objDir[(data[i-1]).match(/\S+$/g)] = []
-            while( (data[i + files] != '$ ls') && ((i + files) != dataLength-1)) { 
+            while( (data[i + files] != '$ ls') && ((i + files) != dataLength)) { 
                 if (/[$]+/g.test(data[i + files]) === false){
                     objDir[(data[i-1]).match(/\S+$/g)].push(convertString((data[i + files])))                
                 }
@@ -76,7 +76,7 @@ const calculateSize = objDir => {
             solutionSize = solutionSize + sum
         }
     }       
-    return console.log(solutionSize)
+    return console.log(objDir), console.log(solutionSize)
 } 
 
 //console.log(objCreation(data))

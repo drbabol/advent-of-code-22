@@ -31,13 +31,23 @@ const objCreation = data => {
 
     for (let i=0; i<dataLength; i++){
         if (data[i] === '$ ls'){
-            objDir[(data[i-1]).match(/\S+$/g)] = []
-            while( (data[i + files] != '$ ls') && ((i + files) != dataLength)) { 
-                if (/[$]+/g.test(data[i + files]) === false){
-                    objDir[(data[i-1]).match(/\S+$/g)].push(convertString((data[i + files])))                
+
+            if (((data[i-1]).match(/\S+$/g) in objDir) === false) {
+                objDir[(data[i-1]).match(/\S+$/g)] = []
+                while( (data[i + files] != '$ ls') && ((i + files) != dataLength)) { 
+                    if (/[$]+/g.test(data[i + files]) === false){
+                        objDir[(data[i-1]).match(/\S+$/g)].push(convertString((data[i + files])))                
+                    }
+                    files = files + 1
+                    }
+            }else{
+                while( (data[i + files] != '$ ls') && ((i + files) != dataLength)) { 
+                    if (/[$]+/g.test(data[i + files]) === false){
+                        objDir[(data[i-1]).match(/\S+$/g)].push(convertString((data[i + files])))                
+                    }
+                    files = files + 1
+                    }
                 }
-                files = files + 1
-            }
         }
         files = 1
     }
@@ -48,7 +58,7 @@ const objCreation = data => {
 const calculateSize = objDir => {
 
     const keyLength = Object.keys(objDir).length
-    const sumDir = 0
+    //const sumDir = 0
     let solutionSize = 0
 
     Object.values(objDir).forEach(array => {
@@ -79,5 +89,5 @@ const calculateSize = objDir => {
     return console.log(objDir), console.log(solutionSize)
 } 
 
-//console.log(objCreation(data))
+console.log(objCreation(data))
 calculateSize(objCreation(data))

@@ -29,7 +29,7 @@ const objCreation = data => {
     const objDir = {}
     let files = 1
 
-    for (let i=2; i<dataLength; i++){
+    for (let i=0; i<dataLength; i++){
         if (data[i] === '$ ls'){
 
             if (((data[i-1]).match(/\S+$/g) in objDir) === false) {
@@ -48,25 +48,25 @@ const objCreation = data => {
                         objDir[(data[i-1]).match(/\S+$/g)].push(convertString((data[i + files])))   
                     }
                     files = files + 1
-                    }
-                    
+                    }   
             }
-        
+           
         }
         files = 1
     }
-    
+ 
+    /*
     for(i=0;i<Object.keys(objDir).length;i++){
 
         let array = objDir[Object.keys(objDir)[i]]
         const sum = array.reduce(function(prev, curr){return (Number(prev) || 0) + (Number(curr) || 0)})
         array = array.filter(x => isNaN(x));    
         objDir[Object.keys(objDir)[i]] = array
-        if(array.length != 1){
+        //if(array.length != 1){
             objDir[Object.keys(objDir)[i]].push(sum)     
-        }
+       // }
     }
-    
+    */
     return objDir
 }
 
@@ -86,20 +86,19 @@ const calculateSize = objDir => {
             });
           }
 
-        //while (onlyNumbers(array) === false)  {
+        while (onlyNumbers(array) === false)  {
             array.forEach(element => {
                 if (isNaN(element)){
                     array = array.concat(objDir[element])
                     removed = array.splice(array.indexOf(element),1)
                 }  
             })
-            console.log(onlyNumbers(array))
             onlyNumbers(array)
             objDir[Object.keys(objDir)[i]] = array
-        //}
+        }
     }    
   
-    /*
+    
     for (let i=0; i< keyLength;i++){
 
         //objDir[Object.keys(objDir)[i]] = objDir[Object.keys(objDir)[i]].flat(Infinity)
@@ -114,9 +113,9 @@ const calculateSize = objDir => {
             solutionSize = solutionSize + sum
         }
     }      
-    */
-    return  console.log(objDir)//, console.log(solutionSize)
+    
+    return  console.log(objDir), console.log(solutionSize)
 } 
 
 console.log(objCreation(data))
-//calculateSize(objCreation(data))
+calculateSize(objCreation(data))

@@ -1,7 +1,7 @@
 //day 7
 
 const fs = require('fs');
-const fileName = 'test.txt'
+const fileName ='input.txt'
 
 let data = fs.readFileSync(fileName, {encoding:'utf8'})
 
@@ -29,7 +29,7 @@ const objCreation = data => {
     const objDir = {}
     let files = 1
 
-    for (let i=0; i<dataLength; i++){
+    for (let i=2; i<dataLength; i++){
         if (data[i] === '$ ls'){
 
             if (((data[i-1]).match(/\S+$/g) in objDir) === false) {
@@ -40,17 +40,33 @@ const objCreation = data => {
                     }
                     files = files + 1
                     }
+                   
             }else{
                 while( (data[i + files] != '$ ls') && ((i + files) != dataLength)) { 
+                   
                     if (/[$]+/g.test(data[i + files]) === false){
-                        objDir[(data[i-1]).match(/\S+$/g)].push(convertString((data[i + files])))                
+                        objDir[(data[i-1]).match(/\S+$/g)].push(convertString((data[i + files])))   
                     }
                     files = files + 1
                     }
-                }
+                    
+            }
+        
         }
         files = 1
     }
+    
+    for(i=0;i<Object.keys(objDir).length;i++){
+
+        let array = objDir[Object.keys(objDir)[i]]
+        const sum = array.reduce(function(prev, curr){return (Number(prev) || 0) + (Number(curr) || 0)})
+        array = array.filter(x => isNaN(x));    
+        objDir[Object.keys(objDir)[i]] = array
+        if(array.length != 1){
+            objDir[Object.keys(objDir)[i]].push(sum)     
+        }
+    }
+    
     return objDir
 }
 
@@ -58,36 +74,49 @@ const objCreation = data => {
 const calculateSize = objDir => {
 
     const keyLength = Object.keys(objDir).length
-    //const sumDir = 0
     let solutionSize = 0
 
-    Object.values(objDir).forEach(array => {
+    for (i=0;i<keyLength;i++){
 
-        array.forEach(element => {
+        array = objDir[Object.keys(objDir)[i]]
 
-            if (isNaN(element)){
+        const onlyNumbers = array => {
+            return array.every(element => {
+              return typeof element === 'number';
+            });
+          }
 
-                array[array.indexOf(element)] = objDir[element]
-            }               
-        })
-    })
-
+        //while (onlyNumbers(array) === false)  {
+            array.forEach(element => {
+                if (isNaN(element)){
+                    array = array.concat(objDir[element])
+                    removed = array.splice(array.indexOf(element),1)
+                }  
+            })
+            console.log(onlyNumbers(array))
+            onlyNumbers(array)
+            objDir[Object.keys(objDir)[i]] = array
+        //}
+    }    
+  
+    /*
     for (let i=0; i< keyLength;i++){
 
-        objDir[Object.keys(objDir)[i]] = objDir[Object.keys(objDir)[i]].flat(Infinity)
+        //objDir[Object.keys(objDir)[i]] = objDir[Object.keys(objDir)[i]].flat(Infinity)
       
         const sum = objDir[Object.keys(objDir)[i]].reduce((accumulator, value) => {
-            return accumulator + value;
+             return accumulator + value;
           }, 0);
-
+       
         objDir[Object.keys(objDir)[i]] = sum // I have an obj with all the folder and their size
 
         if (sum <= 100000){
             solutionSize = solutionSize + sum
         }
-    }       
-    return console.log(objDir), console.log(solutionSize)
+    }      
+    */
+    return  console.log(objDir)//, console.log(solutionSize)
 } 
 
 console.log(objCreation(data))
-calculateSize(objCreation(data))
+//calculateSize(objCreation(data))
